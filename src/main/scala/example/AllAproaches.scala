@@ -268,9 +268,7 @@ object BitwiseApproach {
   }
 }
 
-object ActorBasedApproach {
 
-}
 
 object MachineLearningApproach {
   // Ou calcul avec une matrice?

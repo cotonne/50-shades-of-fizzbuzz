@@ -10,4 +10,5 @@ lazy val root = (project in file(".")).
     name := "Hello",
     libraryDependencies += scalaTest % Test
     , libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.0"
+    , libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.16"
   )
