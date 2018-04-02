@@ -287,13 +287,3 @@ object EnterpriseApproach {
 object ProbabilisticApproach {
 
 }
-
-object XtremConstraintsApproach {
-  // No If
-  // No Primitive
-  // Only Void
-}
-
-object BackToBasicsApproach {
-  // Dont use number
-}
