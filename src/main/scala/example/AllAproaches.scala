@@ -2,6 +2,7 @@ package example
 
 import example.DDDApproach.Messages.Message
 
+import scala.collection.immutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
@@ -31,7 +32,7 @@ object FilterApproach {
     val functions: Seq[(Int, String)] = Seq(fizz, buzz)
     val result = functions
       .filter(i % _._1 == 0)
-      .map(_._2(i))
+      .map(_._2)
       .foldLeft("")(_ + _)
     if (result.isEmpty) "" + i else result
   }
@@ -45,6 +46,7 @@ object ImperativeApproach {
     "" + i
   }
 }
+
 // Java Enum approach?
 
 
@@ -236,7 +238,11 @@ object ExceptionApproach {
 // Stream approach
 // On traite les 4 et on prend le premier
 object GenerateAllAndTakeFirstApproach {
-
+  def apply(i: Int): String = List(
+    if (i % 15 == 0) Some("fizzbuzz") else None,
+    if (i % 5 == 0) Some("buzz") else None,
+    if (i % 3 == 0) Some("fizz") else None,
+    Some(i + "")).flatten.head
 }
 
 object ParserCombinatorApproach {
