@@ -21,6 +21,7 @@ class FizzBuzzTest extends FlatSpec with Matchers {
       , PatternMatchingOtherApproach.apply
       , DDDApproach.apply
       , GenerateAllAndTakeFirstApproach.apply
+      , BitwiseApproach.apply
     )
 
     forAll(approaches) {

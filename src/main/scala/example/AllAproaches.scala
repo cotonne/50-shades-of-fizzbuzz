@@ -252,6 +252,22 @@ object ParserCombinatorApproach {
   // def x : Parser
 }
 
+
+object BitwiseApproach {
+  val values: immutable.Seq[Int => String] = List(
+    i => i + "",
+    i => "fizz",
+    i => "buzz",
+    i => "fizzbuzz"
+  )
+
+  def apply(i: Int): String = {
+    val bool1: Int = (i % 3 == 0).compareTo(false)
+    val bool2: Int = (i % 5 == 0).compareTo(false)
+    values((bool2 << 1) + bool1)(i)
+  }
+}
+
 object ActorBasedApproach {
 
 }
