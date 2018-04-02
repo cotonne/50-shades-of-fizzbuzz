@@ -291,7 +291,39 @@ object FreeMonadApproach {
 }
 
 object DecoratorApproach {
+
   // x -> if(x) => modify, call next
+
+  trait Decorator {
+    def say(i: Int): String
+  }
+
+  case class BuzzDecorator(next: Decorator) extends Decorator {
+    override def say(i: Int): String = {
+      next.say(i) + (if (i % 5 == 0) "buzz" else "")
+    }
+  }
+
+  case class FizzDecorator(next: Decorator) extends Decorator {
+    override def say(i: Int): String = {
+      val value = next.say(i)
+      if (i % 3 == 0) "fizz" else value
+    }
+  }
+
+  case class DefaultDecorator(next: Decorator) extends Decorator {
+    override def say(i: Int): String = {
+      val value = next.say(i)
+      if(value.isEmpty) i + "" else value
+    }
+  }
+
+  case class NothingDecorator(next: Decorator) extends Decorator {
+    override def say(i: Int): String = ""
+  }
+
+  def apply(i: Int): String = DefaultDecorator(BuzzDecorator(FizzDecorator(NothingDecorator(null)))).say(i)
+
 }
 
 object StateApproach {
