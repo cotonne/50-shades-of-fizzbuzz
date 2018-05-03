@@ -84,15 +84,33 @@ object PatternMatchingApproach {
   }
 }
 
+// Interesting approach from https://codereview.stackexchange.com/a/147260
 object PatternMatchingOtherApproach {
-  def apply(i: Int): String = i match {
-    case n if n % 15 == 0 => "fizzbuzz"
-    case n if n % 5 == 0 => "buzz"
-    case n if n % 3 == 0 => "fizz"
-    case n => "" + n
+  def apply(i: Int): String = (i % 3, i % 5) match {
+    case (0, 0) => "fizzbuzz"
+    case (0, _) => "fizz"
+    case (_, 0) => "buzz"
+    case _ => i + ""
   }
 }
 
+object BitwiseApproach {
+  val values: immutable.Seq[Int => String] = List(
+    i => i + "",
+    i => "fizz",
+    i => "buzz",
+    i => "fizzbuzz"
+  )
+
+  def apply(i: Int): String = {
+    val bool1: Int = (i % 3 == 0).compareTo(false)
+    val bool2: Int = (i % 5 == 0).compareTo(false)
+    values((bool2 << 1) + bool1)(i)
+  }
+}
+
+// Given x from E, a function f : x |-> f(x)
+// Partial function : x' ∈ E' ⊆ E / x' |-> f(x')
 object PartialFunctionApproach {
 
   private def fizzbuzz: PartialFunction[Int, String] = {
@@ -253,23 +271,6 @@ object ParserCombinatorApproach {
 }
 
 
-object BitwiseApproach {
-  val values: immutable.Seq[Int => String] = List(
-    i => i + "",
-    i => "fizz",
-    i => "buzz",
-    i => "fizzbuzz"
-  )
-
-  def apply(i: Int): String = {
-    val bool1: Int = (i % 3 == 0).compareTo(false)
-    val bool2: Int = (i % 5 == 0).compareTo(false)
-    values((bool2 << 1) + bool1)(i)
-  }
-}
-
-
-
 object MachineLearningApproach {
   // Ou calcul avec une matrice?
 }
@@ -312,7 +313,7 @@ object DecoratorApproach {
   case class DefaultDecorator(next: Decorator) extends Decorator {
     override def say(i: Int): String = {
       val value = next.say(i)
-      if(value.isEmpty) i + "" else value
+      if (value.isEmpty) i + "" else value
     }
   }
 
