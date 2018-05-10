@@ -340,3 +340,16 @@ object EnterpriseApproach {
 object ProbabilisticApproach {
 
 }
+
+// From @KelvinHenney
+object ZipWithApproach {
+  private val fizzes = List.fill(15)(Seq("", "", "fizz")).flatten
+  private val buzzes = List.fill(15)(Seq("", "", "", "", "buzz")).flatten
+  private val words = (fizzes, buzzes).zipped map(_ ++ _)
+
+  def apply(i: Int): String = {
+    val numbers = Seq.range(1, i + 1).map(_.toString())
+    val seq = (List.fill(i)(words).flatten, numbers).zipped map (List(_, _))
+    seq.last.maxBy(_.length)
+  }
+}
